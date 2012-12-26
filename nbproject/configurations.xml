@@ -4,6 +4,12 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Controller.h</itemPath>
+      <itemPath>DynQueueNode.h</itemPath>
+      <itemPath>DynamicQueue.h</itemPath>
+      <itemPath>HuffmanTree.h</itemPath>
+      <itemPath>PQueueNode.h</itemPath>
+      <itemPath>PriorityQueue.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
