@@ -23,6 +23,13 @@ public:
     ~Controller();
 };
 
+Controller::compressFile( string inputFileName, string outputFileName )
+{
+    huffmanTree = new HuffmanTree( inputFileName );
+    huffmanTree->doCompressedOutput( string outputFileName );
+    huffmanTree->closeFiles();
+}
+
 Controller::decompressFile( string inputFileName, string outputFileName )
 {
     this->huffmanTree->decompressFile( inputFileName, outputFileName );

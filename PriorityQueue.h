@@ -18,20 +18,22 @@ using namespace std;
 class PriorityQueue
 {
 private:
-    PQueueNode * root;
     PQueueNode * lastInserted;
+    PQueueNode * root;
     
     void percolateUp( PQueueNode * );
     void percolateDown();
     void adjustLastInserted();
     void swap( PQueueNode *, PQueueNode * );
     void preOrder( PQueueNode * );
+    PQueueNode * searchNode( PQueueNode * ptr, int x );
 public:
     PriorityQueue();
     
     void enqueue( int );
     int dequeue();
     void preOrder();
+    PQueueNode * searchNode( int x ) { return searchNode( root, x ); }
 };
 
 void PriorityQueue::percolateUp( PQueueNode * ptr )
@@ -236,6 +238,23 @@ void PriorityQueue::preOrder( PQueueNode * ptr )
         preOrder( ptr->leftSubTree );
         preOrder( ptr->rightSubTree );
     }
+}
+
+PQueueNode * PriorityQueue::searchNode( PQueueNode * ptr, int x )
+{
+    PQueueNode * foundPtr = 0;
+    
+    if ( ptr != 0 )
+    {
+        if ( ptr->info == x )
+            foundPtr = ptr;
+        if ( foundPtr == 0 ) // if the required node is not yet found
+            foundPtr = searchNode( ptr->leftSubTree, x ); // search the left sub tree
+        if ( foundPtr == 0 ) // if the node is still not found
+            foundPtr = searchNode( ptr->rightSubTree, x ); // search the right sub tree
+    }
+    
+    return foundPtr; // now foundPtr contains either the address of specified node or null, in case it was not found in the tree
 }
 #endif	/* PRIORITYQUEUE_H */
 
