@@ -19,7 +19,7 @@ private:
     ifstream inputFile;
     ofstream outputFile;
 public:
-    HuffmanTree( string inputFileName );
+//    HuffmanTree( string inputFileName );
     void becomeHuffmanTree();
     void createLookupTabel();
     int lookupHuffmanCode( char character );
@@ -28,10 +28,10 @@ public:
     void decompressFile( string inputFileName, string outputFileName );
 };
 
-HuffmanTree::HuffmanTree( string inputFileName )
-{
-    inputFile.open( inputFileName.c_str() );
-}
+//HuffmanTree::HuffmanTree( string inputFileName )
+//{
+//    inputFile.open( inputFileName.c_str() );
+//}
 
 void HuffmanTree::becomeHuffmanTree()
 {

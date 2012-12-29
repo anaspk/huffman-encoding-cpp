@@ -14,6 +14,8 @@ using namespace std;
 int main(int argc, char** argv) {
     int choice;
     string inputFileName, outputFileName;
+    CompressionManager * compressionManager;
+    DecompressionManager * decompressionManager;
     
     do {
         cout << "What do you want to do? Enter:" << endl;
@@ -28,7 +30,9 @@ int main(int argc, char** argv) {
                 cin >> inputFileName;
                 cout << "Please enter name of output file:" << endl;
                 cin >> outputFileName;
-                CompressionManager compressionManager( inputFileName, outputFileName );
+                compressionManager = new CompressionManager( inputFileName, outputFileName );
+                compressionManager->printDistinctChars();
+                delete compressionManager;
             }
                 break;
             case 2: {
@@ -36,14 +40,15 @@ int main(int argc, char** argv) {
                 cin >> inputFileName;
                 cout << "Please enter name of output file:" << endl;
                 cin >> outputFileName;
-                DecompressionManager decompressionManager( inputFileName, outputFileName );
+                decompressionManager = new DecompressionManager( inputFileName, outputFileName );
+                delete decompressionManager;
             }
                 break;
             default:
                 break;
         }
         
-    } while ( choice != 1 && choice != 2 );
+    } while ( choice == 1 || choice == 2 );
     
     return 0;
 }
