@@ -8,15 +8,16 @@
 #ifndef PQUEUENODE_H
 #define	PQUEUENODE_H
 
+template <class NodeType>
 class PQueueNode
 {
 public:
-    int info;
+    NodeType info;
     PQueueNode * leftSubTree;
     PQueueNode * rightSubTree;
     PQueueNode * fatherNode;
 
-    PQueueNode( int x, PQueueNode * l = 0, PQueueNode * r = 0, PQueueNode * f = 0 )
+    PQueueNode( NodeType x, PQueueNode * l = 0, PQueueNode * r = 0, PQueueNode * f = 0 )
     {
         info = x;
         leftSubTree = l;

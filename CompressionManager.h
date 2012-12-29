@@ -27,7 +27,8 @@ private:
 public:
     CompressionManager( string ifile, string ofile );
     void readAndCountCharacters();
-    void printDistinctChars();
+    void enqueueCharacters();
+    void tempUtilFunc();
 };
 
 CompressionManager::CompressionManager( string ifile, string ofile ) {
@@ -39,7 +40,7 @@ CompressionManager::CompressionManager( string ifile, string ofile ) {
     }
     
     readAndCountCharacters();
-    
+    enqueueCharacters();
 }
 
 void CompressionManager::readAndCountCharacters() {
@@ -52,10 +53,18 @@ void CompressionManager::readAndCountCharacters() {
     inputFile.close();
 }
 
-void CompressionManager::printDistinctChars() {
+void CompressionManager::enqueueCharacters() {
     for ( int i=0; i<256; i++ ) {
         if ( characterCount[i] != 0 )
-            cout << "\'" << static_cast<char>(i) << "\' appeared " << characterCount[i] << " times in this file" << endl;
+            characterQueue.enqueue( characterCount[i] );
+    }
+}
+
+void CompressionManager::tempUtilFunc() {
+    int charCount = characterQueue.dequeue();
+    while ( charCount != 0 ) {
+        cout << charCount << endl;
+        charCount = characterQueue.dequeue();
     }
 }
 #endif	/* COMPRESSIONMANAGER_H */

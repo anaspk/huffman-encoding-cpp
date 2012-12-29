@@ -15,26 +15,28 @@
 
 using namespace std;
 
+template <class QueueType>
 class PriorityQueue
 {
 private:
-    PQueueNode * root;
-    PQueueNode * lastInserted;
+    PQueueNode<QueueType> * root;
+    PQueueNode<QueueType> * lastInserted;
     
-    void percolateUp( PQueueNode * );
+    void percolateUp( PQueueNode<QueueType> * );
     void percolateDown();
     void adjustLastInserted();
-    void swap( PQueueNode *, PQueueNode * );
-    void preOrder( PQueueNode * );
+    void swap( PQueueNode<QueueType> *, PQueueNode<QueueType> * );
+    void preOrder( PQueueNode<QueueType> * );
 public:
     PriorityQueue();
     
-    void enqueue( int );
-    int dequeue();
+    void enqueue( QueueType );
+    QueueType dequeue();
     void preOrder();
 };
 
-void PriorityQueue::percolateUp( PQueueNode * ptr )
+template <class QueueType>
+void PriorityQueue<QueueType>::percolateUp( PQueueNode<QueueType> * ptr )
 {
     bool queueValidated = false;
     
@@ -50,9 +52,10 @@ void PriorityQueue::percolateUp( PQueueNode * ptr )
     }
 }
 
-void PriorityQueue::percolateDown()
-{
-    PQueueNode *p = root;
+template <class QueueType>
+void PriorityQueue<QueueType>::percolateDown()
+{   
+    PQueueNode<QueueType> *p = root;
     bool queueValidated = false;
     if (root != 0) {
         while (((p->leftSubTree != 0) || (p->rightSubTree != 0)) && (!queueValidated)) {
@@ -75,10 +78,11 @@ void PriorityQueue::percolateDown()
     }
 }
 
-void PriorityQueue::adjustLastInserted()
+template <class QueueType>
+void PriorityQueue<QueueType>::adjustLastInserted()
 {
-    DynamicQueue<PQueueNode*> queue;
-    PQueueNode * temp;
+    DynamicQueue<PQueueNode<QueueType>*> queue;
+    PQueueNode<QueueType> * temp;
     
     queue.enqueue( root );
     
@@ -95,30 +99,33 @@ void PriorityQueue::adjustLastInserted()
     lastInserted = temp;
 }
 
-void PriorityQueue::swap( PQueueNode * p, PQueueNode * q )
+template <class QueueType>
+void PriorityQueue<QueueType>::swap( PQueueNode<QueueType> * p, PQueueNode<QueueType> * q )
 {
-    int temp = p->info;
+    QueueType temp = p->info;
     p->info = q->info;
     q->info = temp;
 }
 
-PriorityQueue::PriorityQueue()
+template <class QueueType>
+PriorityQueue<QueueType>::PriorityQueue()
 {
     root = lastInserted = 0;
 }
 
-void PriorityQueue::enqueue( int x )
+template <class QueueType>
+void PriorityQueue<QueueType>::enqueue( QueueType x )
 {
-    PQueueNode * ptr = new PQueueNode( x );
+    PQueueNode<QueueType> * ptr = new PQueueNode<QueueType>( x );
     
     if ( root == 0 )
         root = ptr;
     else
     {
-        DynamicQueue<PQueueNode*> queue;
+        DynamicQueue<PQueueNode<QueueType>*> queue;
         bool nodeInserted = false;
         queue.enqueue( root );
-        PQueueNode * temp;
+        PQueueNode<QueueType> * temp;
         
         while( !nodeInserted )
         {
@@ -148,13 +155,14 @@ void PriorityQueue::enqueue( int x )
     }
 }
 
-int PriorityQueue::dequeue()
+template <class QueueType>
+QueueType PriorityQueue<QueueType>::dequeue()
 {
     if ( root != 0 )
     {
-        PQueueNode * toDelete;
+        PQueueNode<QueueType> * toDelete;
         
-        int value = root->info;
+        QueueType value = root->info;
         
         if ( lastInserted != root ) // in that case, lastInserted->fatherNode will be 0 and will cause the program to crash
         {
@@ -189,12 +197,14 @@ int PriorityQueue::dequeue()
     }
 }
 
-void PriorityQueue::preOrder()
+template <class QueueType>
+void PriorityQueue<QueueType>::preOrder()
 {
     preOrder( root );
 }
 
-void PriorityQueue::preOrder( PQueueNode * ptr )
+template <class QueueType>
+void PriorityQueue<QueueType>::preOrder( PQueueNode<QueueType> * ptr )
 {
     if ( ptr != 0 )
     {

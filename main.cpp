@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
                 cout << "Please enter name of output file:" << endl;
                 cin >> outputFileName;
                 compressionManager = new CompressionManager( inputFileName, outputFileName );
-                compressionManager->printDistinctChars();
+                compressionManager->tempUtilFunc();
                 delete compressionManager;
             }
                 break;
