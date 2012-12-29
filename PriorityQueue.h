@@ -18,24 +18,20 @@ using namespace std;
 class PriorityQueue
 {
 private:
-    PQueueNode * lastInserted;
     PQueueNode * root;
+    PQueueNode * lastInserted;
     
     void percolateUp( PQueueNode * );
     void percolateDown();
     void adjustLastInserted();
     void swap( PQueueNode *, PQueueNode * );
     void preOrder( PQueueNode * );
-    PQueueNode * searchNode( PQueueNode * ptr, char c='\0' );
-protected:
-    void enqueue( PQueueNode * );
 public:
     PriorityQueue();
     
-    void enqueue( int, char );
+    void enqueue( int );
     int dequeue();
     void preOrder();
-    PQueueNode * searchNode( char c ) { return searchNode( root, c ); }
 };
 
 void PriorityQueue::percolateUp( PQueueNode * ptr )
@@ -111,14 +107,9 @@ PriorityQueue::PriorityQueue()
     root = lastInserted = 0;
 }
 
-void PriorityQueue::enqueue( PQueueNode * ptr )
+void PriorityQueue::enqueue( int x )
 {
-    
-}
-
-void PriorityQueue::enqueue( int x, char c )
-{
-    PQueueNode * ptr = new PQueueNode( x, c );
+    PQueueNode * ptr = new PQueueNode( x );
     
     if ( root == 0 )
         root = ptr;
@@ -211,23 +202,6 @@ void PriorityQueue::preOrder( PQueueNode * ptr )
         preOrder( ptr->leftSubTree );
         preOrder( ptr->rightSubTree );
     }
-}
-
-PQueueNode * PriorityQueue::searchNode( PQueueNode * ptr, int c )
-{
-    PQueueNode * foundPtr = 0;
-    
-    if ( ptr != 0 )
-    {
-        if ( ptr->character == c )
-            foundPtr = ptr;
-        if ( foundPtr == 0 ) // if the required node is not yet found
-            foundPtr = searchNode( ptr->leftSubTree, c ); // search the left sub tree
-        if ( foundPtr == 0 ) // if the node is still not found
-            foundPtr = searchNode( ptr->rightSubTree, c ); // search the right sub tree
-    }
-    
-    return foundPtr; // now foundPtr contains either the address of specified node or null, in case it was not found in the tree
 }
 #endif	/* PRIORITYQUEUE_H */
 

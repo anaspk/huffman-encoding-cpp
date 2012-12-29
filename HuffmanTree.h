@@ -20,7 +20,6 @@ private:
     ofstream outputFile;
 public:
     HuffmanTree( string inputFileName );
-    void countCharacter( char character );
     void becomeHuffmanTree();
     void createLookupTabel();
     int lookupHuffmanCode( char character );
@@ -32,19 +31,6 @@ public:
 HuffmanTree::HuffmanTree( string inputFileName )
 {
     inputFile.open( inputFileName.c_str() );
-}
-
-void HuffmanTree::countCharacter( char character )
-{
-    PQueueNode * ptr = this->searchNode( character );
-    if ( ptr != 0 )
-    {
-        (ptr->info)++;
-    }
-    else
-    {
-        this->enqueue( 1, character );
-    }
 }
 
 void HuffmanTree::becomeHuffmanTree()

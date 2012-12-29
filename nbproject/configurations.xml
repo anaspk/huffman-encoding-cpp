@@ -4,7 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>CompressionManager.h</itemPath>
       <itemPath>Controller.h</itemPath>
+      <itemPath>DecompressionManager.h</itemPath>
       <itemPath>DynQueueNode.h</itemPath>
       <itemPath>DynamicQueue.h</itemPath>
       <itemPath>HuffmanTree.h</itemPath>
