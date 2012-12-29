@@ -36,7 +36,15 @@ HuffmanTree::HuffmanTree( string inputFileName )
 
 void HuffmanTree::countCharacter( char character )
 {
-    
+    PQueueNode * ptr = this->searchNode( character );
+    if ( ptr != 0 )
+    {
+        (ptr->info)++;
+    }
+    else
+    {
+        this->enqueue( 1, character );
+    }
 }
 
 void HuffmanTree::becomeHuffmanTree()

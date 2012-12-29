@@ -26,14 +26,16 @@ private:
     void adjustLastInserted();
     void swap( PQueueNode *, PQueueNode * );
     void preOrder( PQueueNode * );
-    PQueueNode * searchNode( PQueueNode * ptr, int x );
+    PQueueNode * searchNode( PQueueNode * ptr, char c='\0' );
+protected:
+    void enqueue( PQueueNode * );
 public:
     PriorityQueue();
     
-    void enqueue( int );
+    void enqueue( int, char );
     int dequeue();
     void preOrder();
-    PQueueNode * searchNode( int x ) { return searchNode( root, x ); }
+    PQueueNode * searchNode( char c ) { return searchNode( root, c ); }
 };
 
 void PriorityQueue::percolateUp( PQueueNode * ptr )
@@ -54,57 +56,23 @@ void PriorityQueue::percolateUp( PQueueNode * ptr )
 
 void PriorityQueue::percolateDown()
 {
-    if ( root != 0 )
-    {
-        bool queueValidated = false;
-        PQueueNode * temp = root;
-
-        while ( !queueValidated && ( temp->leftSubTree != 0 || temp->rightSubTree != 0  ) )
-        {
-            if ( temp->leftSubTree != 0 && temp->rightSubTree != 0 )
-            {
-                if ( temp->rightSubTree->info >  temp->leftSubTree->info )
-                {
-                    if ( temp->rightSubTree->info > temp->info )
-                    {
-                        swap( temp, temp->rightSubTree );
-                        temp = temp->rightSubTree;
-                    }
-                    else
-                        queueValidated = true;
+    PQueueNode *p = root;
+    bool queueValidated = false;
+    if (root != 0) {
+        while (((p->leftSubTree != 0) || (p->rightSubTree != 0)) && (!queueValidated)) {
+            if ((p->rightSubTree != 0) && (p->rightSubTree->info > p->leftSubTree->info)) {
+                if (p->rightSubTree->info > p->info) {
+                    swap(p, p->rightSubTree);
+                    p = p->rightSubTree;
+                } else {
+                    queueValidated = true;
                 }
-                else if ( temp->leftSubTree->info > temp->rightSubTree->info )
-                {
-                    if ( temp->leftSubTree->info > temp->info )
-                    {
-                        swap( temp, temp->leftSubTree );
-                        temp = temp->leftSubTree;
-                    }
-                    else
-                        queueValidated = true;
-                }
-            }
-            else
-            {
-                if ( temp->leftSubTree != 0 )
-                {
-                    if ( temp->leftSubTree->info > temp->info )
-                    {
-                        swap( temp, temp->leftSubTree );
-                        temp = temp->leftSubTree;
-                    }
-                    else
-                        queueValidated = true;
-                }
-                else
-                {
-                    if ( temp->rightSubTree->info > temp->info )
-                    {
-                        swap( temp, temp->rightSubTree );
-                        temp = temp->rightSubTree;
-                    }
-                    else
-                        queueValidated = true;
+            } else {
+                if (p->leftSubTree->info > p->info) {
+                    swap(p, p->leftSubTree);
+                    p = p->leftSubTree;
+                } else {
+                    queueValidated = true;
                 }
             }
         }
@@ -143,9 +111,14 @@ PriorityQueue::PriorityQueue()
     root = lastInserted = 0;
 }
 
-void PriorityQueue::enqueue( int x )
+void PriorityQueue::enqueue( PQueueNode * ptr )
 {
-    PQueueNode * ptr = new PQueueNode( x );
+    
+}
+
+void PriorityQueue::enqueue( int x, char c )
+{
+    PQueueNode * ptr = new PQueueNode( x, c );
     
     if ( root == 0 )
         root = ptr;
@@ -240,18 +213,18 @@ void PriorityQueue::preOrder( PQueueNode * ptr )
     }
 }
 
-PQueueNode * PriorityQueue::searchNode( PQueueNode * ptr, int x )
+PQueueNode * PriorityQueue::searchNode( PQueueNode * ptr, int c )
 {
     PQueueNode * foundPtr = 0;
     
     if ( ptr != 0 )
     {
-        if ( ptr->info == x )
+        if ( ptr->character == c )
             foundPtr = ptr;
         if ( foundPtr == 0 ) // if the required node is not yet found
-            foundPtr = searchNode( ptr->leftSubTree, x ); // search the left sub tree
+            foundPtr = searchNode( ptr->leftSubTree, c ); // search the left sub tree
         if ( foundPtr == 0 ) // if the node is still not found
-            foundPtr = searchNode( ptr->rightSubTree, x ); // search the right sub tree
+            foundPtr = searchNode( ptr->rightSubTree, c ); // search the right sub tree
     }
     
     return foundPtr; // now foundPtr contains either the address of specified node or null, in case it was not found in the tree
