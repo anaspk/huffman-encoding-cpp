@@ -11,8 +11,9 @@
 #include <string>
 #include <fstream>
 #include "PriorityQueue.h"
+#include "HuffmanTreeNode.h"
 
-class HuffmanTree : public PriorityQueue
+class HuffmanTree : public PriorityQueue<HuffmanTreeNode>
 {
 private:
     int huffmanCodeBuffer;

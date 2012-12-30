@@ -5,12 +5,4 @@
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/F:/Assignments/Analysis%20of%20Algorithms/huffman-encoding-cpp/main.cpp</file>
-        <file>file:/F:/Assignments/Analysis%20of%20Algorithms/huffman-encoding-cpp/HuffmanTree.h</file>
-        <file>file:/F:/Assignments/Analysis%20of%20Algorithms/huffman-encoding-cpp/PQueueNode.h</file>
-        <file>file:/F:/Assignments/Analysis%20of%20Algorithms/huffman-encoding-cpp/DecompressionManager.h</file>
-        <file>file:/F:/Assignments/Analysis%20of%20Algorithms/huffman-encoding-cpp/CompressionManager.h</file>
-        <file>file:/F:/Assignments/Analysis%20of%20Algorithms/huffman-encoding-cpp/PriorityQueue.h</file>
-    </open-files>
 </project-private>

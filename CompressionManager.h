@@ -11,6 +11,7 @@
 #include <string>
 #include <fstream>
 #include "PriorityQueue.h"
+#include "HuffmanTreeNode.h"
 #include "HuffmanTree.h"
 
 using namespace std;
@@ -18,7 +19,7 @@ using namespace std;
 class CompressionManager {
 private:
     int characterCount[256];
-    PriorityQueue characterQueue;
+    //PriorityQueue characterQueue;
     HuffmanTree huffmanTree;
     string inputFileName;
     string outputFileName;
@@ -54,17 +55,21 @@ void CompressionManager::readAndCountCharacters() {
 }
 
 void CompressionManager::enqueueCharacters() {
+    HuffmanTreeNode * huffmanTreeNode;
     for ( int i=0; i<256; i++ ) {
-        if ( characterCount[i] != 0 )
-            characterQueue.enqueue( characterCount[i] );
+        if ( characterCount[i] != 0 ) {
+            huffmanTreeNode = new HuffmanTreeNode( characterCount[i], static_cast<char>(i) );
+            huffmanTree.enqueue( *huffmanTreeNode );
+        }
     }
 }
 
 void CompressionManager::tempUtilFunc() {
-    int charCount = characterQueue.dequeue();
-    while ( charCount != 0 ) {
-        cout << charCount << endl;
-        charCount = characterQueue.dequeue();
+    HuffmanTreeNode emptyNode;
+    HuffmanTreeNode huffmanTreeNode = huffmanTree.dequeue();
+    while ( huffmanTreeNode != emptyNode ) {
+        cout << huffmanTreeNode << endl;
+        huffmanTreeNode = huffmanTree.dequeue();
     }
 }
 #endif	/* COMPRESSIONMANAGER_H */

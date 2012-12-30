@@ -193,7 +193,7 @@ QueueType PriorityQueue<QueueType>::dequeue()
     else
     {
         cout << "Cannot dequeue because queue is empty." << endl;
-        return 0;
+        return QueueType();
     }
 }
 

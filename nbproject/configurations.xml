@@ -10,6 +10,7 @@
       <itemPath>DynQueueNode.h</itemPath>
       <itemPath>DynamicQueue.h</itemPath>
       <itemPath>HuffmanTree.h</itemPath>
+      <itemPath>HuffmanTreeNode.h</itemPath>
       <itemPath>PQueueNode.h</itemPath>
       <itemPath>PriorityQueue.h</itemPath>
     </logicalFolder>

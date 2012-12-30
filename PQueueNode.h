@@ -8,6 +8,9 @@
 #ifndef PQUEUENODE_H
 #define	PQUEUENODE_H
 
+#include <iostream>
+using namespace std;
+
 template <class NodeType>
 class PQueueNode
 {
