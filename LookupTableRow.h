@@ -9,11 +9,11 @@
 #define	LOOKUPTABLEROW_H
 
 class LookupTableRow {
-private:
+public:
     char character;
     int code;
     int usedBits;
-public:
+    
     LookupTableRow( char ch, int c=0, int b=0 ){
         character = ch;
     }

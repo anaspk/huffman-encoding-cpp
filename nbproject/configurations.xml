@@ -11,8 +11,12 @@
       <itemPath>DynamicQueue.h</itemPath>
       <itemPath>HuffmanTree.h</itemPath>
       <itemPath>HuffmanTreeNode.h</itemPath>
+      <itemPath>LookupTable.h</itemPath>
+      <itemPath>LookupTableRow.h</itemPath>
       <itemPath>PQueueNode.h</itemPath>
       <itemPath>PriorityQueue.h</itemPath>
+      <itemPath>SingleLinkedList.h</itemPath>
+      <itemPath>SingleLinkedListNode.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"

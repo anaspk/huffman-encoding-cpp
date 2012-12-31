@@ -9,6 +9,7 @@
 #define	LOOKUPTABLE_H
 
 #include "LookupTableRow.h"
+#include "SingleLinkedList.h"
 
 class LookupTable : public SingleLinkedList<LookupTableRow> {
 

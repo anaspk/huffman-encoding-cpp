@@ -43,7 +43,27 @@ public:
 
 void HuffmanTree::becomeHuffmanTree()
 {
+    HuffmanTreeNode node1, node2;
+    PQueueNode<HuffmanTreeNode> *pqnode1, *pqnode2;
+    HuffmanTreeNode * tempnode3;
     
+    while ( !isEmpty() && !isLastElement() ) {
+        //cout << "entered" << endl;
+        node1 = dequeue();
+        node2 = dequeue();
+        pqnode1 = new PQueueNode<HuffmanTreeNode>( node1 );
+        pqnode2 = new PQueueNode<HuffmanTreeNode>( node2 );
+        tempnode3 = new HuffmanTreeNode( node1.count + node2.count );
+        if ( node1 < node2 ) {
+            tempnode3->leftHuffmanTree = pqnode1;
+            tempnode3->rightHuffmanTree = pqnode2;
+        } else {
+            tempnode3->rightHuffmanTree = pqnode1;
+            tempnode3->leftHuffmanTree = pqnode2;
+        }
+        
+        enqueue( tempnode3 );
+    }
 }
 
 void HuffmanTree::createLookupTabel()

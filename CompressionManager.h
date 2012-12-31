@@ -29,7 +29,6 @@ public:
     CompressionManager( string ifile, string ofile );
     void readAndCountCharacters();
     void enqueueCharacters();
-    void becomeHuffmanTree();
     
     //void tempUtilFunc();
 };
@@ -44,7 +43,7 @@ CompressionManager::CompressionManager( string ifile, string ofile ) {
     
     readAndCountCharacters();
     enqueueCharacters();
-    becomeHuffmanTree();
+    huffmanTree.becomeHuffmanTree();
     huffmanTree.outputCodes();
 }
 
@@ -68,29 +67,6 @@ void CompressionManager::enqueueCharacters() {
     }
 }
 
-void CompressionManager::becomeHuffmanTree() {
-    HuffmanTreeNode node1, node2;
-    PQueueNode<HuffmanTreeNode> *pqnode1, *pqnode2;
-    HuffmanTreeNode * tempnode3;
-    
-    while ( !huffmanTree.isEmpty() && !huffmanTree.isLastElement() ) {
-        //cout << "entered" << endl;
-        node1 = huffmanTree.dequeue();
-        node2 = huffmanTree.dequeue();
-        pqnode1 = new PQueueNode<HuffmanTreeNode>( node1 );
-        pqnode2 = new PQueueNode<HuffmanTreeNode>( node2 );
-        tempnode3 = new HuffmanTreeNode( node1.count + node2.count );
-        if ( node1 < node2 ) {
-            tempnode3->leftHuffmanTree = pqnode1;
-            tempnode3->rightHuffmanTree = pqnode2;
-        } else {
-            tempnode3->rightHuffmanTree = pqnode1;
-            tempnode3->leftHuffmanTree = pqnode2;
-        }
-        
-        huffmanTree.enqueue( tempnode3 );
-    }
-}
 //void CompressionManager::tempUtilFunc() {
 ////    HuffmanTreeNode emptyNode;
 ////    HuffmanTreeNode huffmanTreeNode = huffmanTree.dequeue();
