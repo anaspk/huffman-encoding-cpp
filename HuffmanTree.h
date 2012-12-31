@@ -10,6 +10,7 @@
 
 #include <string>
 #include <fstream>
+#include <cmath>
 #include "PriorityQueue.h"
 #include "HuffmanTreeNode.h"
 #include "LookupTable.h"
@@ -21,6 +22,8 @@ class HuffmanTree : public PriorityQueue<HuffmanTreeNode>
 private:
     int huffmanCodeBuffer;
     int hcbUsedBits;
+    int machineBits;
+    int biggestInteger;
     ifstream inputFile;
     ofstream outputFile;
     LookupTable lookupTable;
@@ -29,17 +32,26 @@ private:
     void outputCodes( PQueueNode<HuffmanTreeNode> * p, string code );
 protected:
     int insertBit( int number, int bit );
+    int getLeftMostBit( int number );
 public:
+    HuffmanTree();
     void becomeHuffmanTree();
     void createLookupTable();
-    void closeFiles();
-    void doCompressedOutput( string outputFileName );
+    void doCompressedOutput( string inputFileName, string outputFileName );
     void writeCodeToFile( LookupTableRow codeRow );
     void finishOutput();
     void decompressFile( string inputFileName, string outputFileName );
     void huffmanTreePreorder();
     void outputCodes();
 };
+
+HuffmanTree::HuffmanTree() {
+    huffmanCodeBuffer = 0;
+    hcbUsedBits = 0;
+    machineBits = sizeof( int ) * 8;
+    biggestInteger = 1;
+    biggestInteger = biggestInteger << ( machineBits - 1);
+}
 
 void HuffmanTree::becomeHuffmanTree()
 {
@@ -68,7 +80,7 @@ void HuffmanTree::becomeHuffmanTree()
 void HuffmanTree::createLookupTable()
 {
     createLookupTable( root, 0, 0 );
-//    lookupTable.print();
+    lookupTable.print();
 }
 
 void HuffmanTree::createLookupTable( PQueueNode<HuffmanTreeNode> * p, int code, int usedBits ) {
@@ -83,26 +95,18 @@ void HuffmanTree::createLookupTable( PQueueNode<HuffmanTreeNode> * p, int code, 
     }
 }
 
-void HuffmanTree::closeFiles()
-{
-    
-}
-
 void HuffmanTree::doCompressedOutput( string inputFileName, string outputFileName )
 {
     inputFile.open( inputFileName.c_str() );
     outputFile.open( outputFileName.c_str() );
     char c;
     LookupTableRow codeRow;
-    
-    huffmanCodeBuffer = 0;
-    hcbUsedBits = 0;
-    
     c = inputFile.get();
     
     while ( c != EOF ) {
         codeRow = lookupTable.getCodeRow( c );
         writeCodeToFile( codeRow );
+        c = inputFile.get();
     }
     finishOutput();
     
@@ -111,15 +115,50 @@ void HuffmanTree::doCompressedOutput( string inputFileName, string outputFileNam
 }
 
 void HuffmanTree::writeCodeToFile( LookupTableRow codeRow ) {
-    if ( (32 - hcbUsedBits) > codeRow.usedBits ) {
-        int code = codeRow.code;
-        code = code << (32 - codeRow.usedBits );
-        int bit;
-        
+    int code = codeRow.code;
+    code = code << (32 - codeRow.usedBits );
+    int bit;
+    
+    if ( (machineBits - hcbUsedBits) >= codeRow.usedBits ) {
         for ( int i=0; i<codeRow.usedBits; i++ ) {
             bit = getLeftMostBit( code );
             huffmanCodeBuffer = insertBit( huffmanCodeBuffer, bit );
+            hcbUsedBits++;
+            code = code << 1;
         }
+    } else {
+        int availableBits = machineBits - hcbUsedBits;
+        for ( int i=0; i<availableBits; i++ ) {
+            bit = getLeftMostBit( code );
+            huffmanCodeBuffer = insertBit( huffmanCodeBuffer, bit );
+            hcbUsedBits++;
+            code = code << 1;
+        }
+        cout << "bits in huffman code buffer from left to right are:" << endl;
+        for ( int i=0; i<machineBits; i++ ) {
+            cout << getLeftMostBit( huffmanCodeBuffer ) << endl;
+            huffmanCodeBuffer = huffmanCodeBuffer << 1;
+        }
+        hcbUsedBits = 0;
+        
+        int remainingBits = codeRow.usedBits - availableBits;
+        
+        for ( int i=0; i<remainingBits; i++ ) {
+            bit = getLeftMostBit( code );
+            huffmanCodeBuffer = insertBit( huffmanCodeBuffer, bit );
+            hcbUsedBits++;
+            code = code << 1;
+        }
+    }
+}
+
+void HuffmanTree::finishOutput() {
+    cout << "Last remaining bits of encoding are:" << endl;
+    huffmanCodeBuffer = huffmanCodeBuffer << ( machineBits - hcbUsedBits );
+    
+    for ( int i=0; i<hcbUsedBits; i++ ) {
+        cout << getLeftMostBit( huffmanCodeBuffer ) << endl;
+        huffmanCodeBuffer = huffmanCodeBuffer << 1;
     }
 }
 
@@ -161,6 +200,10 @@ int HuffmanTree::insertBit( int number, int bit ) {
     number = number << 1;
     number = number | bit;
     return number;
+}
+
+int HuffmanTree::getLeftMostBit( int number ) {
+    return ( ( ( number & biggestInteger ) == 0 ) ? 0 : 1 );
 }
 #endif	/* HUFFMANTREE_H */
 

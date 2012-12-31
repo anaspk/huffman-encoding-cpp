@@ -13,7 +13,7 @@
 
 class LookupTable : public SingleLinkedList<LookupTableRow> {
     public:
-        int getCodeRow( char character );
+        LookupTableRow getCodeRow( char character );
 };
 
 LookupTableRow LookupTable::getCodeRow(char character) {
@@ -23,8 +23,16 @@ LookupTableRow LookupTable::getCodeRow(char character) {
 
         while ( temp->next != 0 )
         {
-            if ( temp->info.character == character )
+            if ( temp->info.character == character ) {
+//                cout << "matched " << temp->info.character << " to " << character << endl;
                 return temp->info;
+            }
+                
+            temp = temp->next;
+        }
+        if ( temp->info.character == character ) {
+//            cout << "matched " << temp->info.character << " to " << character << endl;
+            return temp->info;
         }
     }
 }
