@@ -85,12 +85,10 @@ void HuffmanTree::huffmanTreePreorder( PQueueNode<HuffmanTreeNode> * p ) {
 
 void HuffmanTree::outputCodes()
 {
-    //cout << "public called" << endl;
     outputCodes( root, "" );
 }
 
 void HuffmanTree::outputCodes( PQueueNode<HuffmanTreeNode> * p, string code ) {
-    //cout << "private called" << endl;
     if ( p->info.leftHuffmanTree != 0 ){
         outputCodes( p->info.leftHuffmanTree, code + "0" );
     }
