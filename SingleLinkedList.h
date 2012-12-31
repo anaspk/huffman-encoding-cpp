@@ -14,7 +14,7 @@ using namespace std;
 template <class listType>
 class SingleLinkedList
 {
-    private:
+    protected:
         SingleLinkedListNode<listType> * head;
         SingleLinkedListNode<listType> * tail;
         

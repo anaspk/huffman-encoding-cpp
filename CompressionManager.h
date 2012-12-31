@@ -44,6 +44,7 @@ CompressionManager::CompressionManager( string ifile, string ofile ) {
     huffmanTree.becomeHuffmanTree();
     huffmanTree.outputCodes();
     huffmanTree.createLookupTable();
+    huffmanTree.doCompressedOutput();
 }
 
 void CompressionManager::readAndCountCharacters() {

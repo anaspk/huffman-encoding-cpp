@@ -20,6 +20,7 @@ class HuffmanTree : public PriorityQueue<HuffmanTreeNode>
 {
 private:
     int huffmanCodeBuffer;
+    int hcbUsedBits;
     ifstream inputFile;
     ofstream outputFile;
     LookupTable lookupTable;
@@ -31,9 +32,10 @@ protected:
 public:
     void becomeHuffmanTree();
     void createLookupTable();
-    int lookupHuffmanCode( char character );
     void closeFiles();
     void doCompressedOutput( string outputFileName );
+    void writeCodeToFile( LookupTableRow codeRow );
+    void finishOutput();
     void decompressFile( string inputFileName, string outputFileName );
     void huffmanTreePreorder();
     void outputCodes();
@@ -46,7 +48,6 @@ void HuffmanTree::becomeHuffmanTree()
     HuffmanTreeNode * tempnode3;
     
     while ( !isEmpty() && !isLastElement() ) {
-        //cout << "entered" << endl;
         node1 = dequeue();
         node2 = dequeue();
         pqnode1 = new PQueueNode<HuffmanTreeNode>( node1 );
@@ -67,7 +68,7 @@ void HuffmanTree::becomeHuffmanTree()
 void HuffmanTree::createLookupTable()
 {
     createLookupTable( root, 0, 0 );
-    lookupTable.print();
+//    lookupTable.print();
 }
 
 void HuffmanTree::createLookupTable( PQueueNode<HuffmanTreeNode> * p, int code, int usedBits ) {
@@ -82,19 +83,44 @@ void HuffmanTree::createLookupTable( PQueueNode<HuffmanTreeNode> * p, int code, 
     }
 }
 
-int HuffmanTree::lookupHuffmanCode( char character )
-{
-    
-}
-
 void HuffmanTree::closeFiles()
 {
     
 }
 
-void doCompressedOutput( string outputFileName )
+void HuffmanTree::doCompressedOutput( string inputFileName, string outputFileName )
 {
+    inputFile.open( inputFileName.c_str() );
+    outputFile.open( outputFileName.c_str() );
+    char c;
+    LookupTableRow codeRow;
     
+    huffmanCodeBuffer = 0;
+    hcbUsedBits = 0;
+    
+    c = inputFile.get();
+    
+    while ( c != EOF ) {
+        codeRow = lookupTable.getCodeRow( c );
+        writeCodeToFile( codeRow );
+    }
+    finishOutput();
+    
+    inputFile.close();
+    outputFile.close();
+}
+
+void HuffmanTree::writeCodeToFile( LookupTableRow codeRow ) {
+    if ( (32 - hcbUsedBits) > codeRow.usedBits ) {
+        int code = codeRow.code;
+        code = code << (32 - codeRow.usedBits );
+        int bit;
+        
+        for ( int i=0; i<codeRow.usedBits; i++ ) {
+            bit = getLeftMostBit( code );
+            huffmanCodeBuffer = insertBit( huffmanCodeBuffer, bit );
+        }
+    }
 }
 
 void decompressFile( string inputFileName, string outputFileName )
