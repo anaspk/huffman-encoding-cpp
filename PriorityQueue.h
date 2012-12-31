@@ -19,7 +19,6 @@ template <class QueueType>
 class PriorityQueue
 {
 private:
-    PQueueNode<QueueType> * root;
     PQueueNode<QueueType> * lastInserted;
     
     void percolateUp( PQueueNode<QueueType> * );
@@ -27,12 +26,18 @@ private:
     void adjustLastInserted();
     void swap( PQueueNode<QueueType> *, PQueueNode<QueueType> * );
     void preOrder( PQueueNode<QueueType> * );
+protected:
+    PQueueNode<QueueType> * root;
 public:
     PriorityQueue();
     
     void enqueue( QueueType );
+    void enqueue( QueueType * );
     QueueType dequeue();
+//    QueueType * dequeue();
     void preOrder();
+    bool isEmpty();
+    bool isLastElement();
 };
 
 template <class QueueType>
@@ -156,6 +161,11 @@ void PriorityQueue<QueueType>::enqueue( QueueType x )
 }
 
 template <class QueueType>
+void PriorityQueue<QueueType>::enqueue( QueueType * x ) {
+    enqueue( *x );
+}
+
+template <class QueueType>
 QueueType PriorityQueue<QueueType>::dequeue()
 {
     if ( root != 0 )
@@ -197,6 +207,12 @@ QueueType PriorityQueue<QueueType>::dequeue()
     }
 }
 
+//template <class QueueType>
+//QueueType * PriorityQueue<QueueType>::dequeue()
+//{
+//    
+//}
+
 template <class QueueType>
 void PriorityQueue<QueueType>::preOrder()
 {
@@ -212,6 +228,16 @@ void PriorityQueue<QueueType>::preOrder( PQueueNode<QueueType> * ptr )
         preOrder( ptr->leftSubTree );
         preOrder( ptr->rightSubTree );
     }
+}
+
+template <class QueueType>
+bool PriorityQueue<QueueType>::isEmpty() {
+    return ( root == 0);
+}
+
+template <class QueueType>
+bool PriorityQueue<QueueType>::isLastElement() {
+    return ( root->leftSubTree == 0 && root->rightSubTree == 0 );
 }
 #endif	/* PRIORITYQUEUE_H */
 

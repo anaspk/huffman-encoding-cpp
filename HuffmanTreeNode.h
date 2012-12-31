@@ -9,6 +9,8 @@
 #define	HUFFMANTREENODE_H
 
 #include <iostream>
+#include "PQueueNode.h"
+
 using namespace std;
 
 class HuffmanTreeNode
@@ -16,8 +18,8 @@ class HuffmanTreeNode
 public:
     int count;
     char character;
-    HuffmanTreeNode * leftHuffmanTree;
-    HuffmanTreeNode * rightHuffmanTree;
+    PQueueNode<HuffmanTreeNode> * leftHuffmanTree;
+    PQueueNode<HuffmanTreeNode> * rightHuffmanTree;
     
     HuffmanTreeNode( int x = 0, char c='\0' )
     {
@@ -64,7 +66,7 @@ public:
     
     friend ostream &operator<<( ostream &out, HuffmanTreeNode node )
     {
-        return ( out << "\'" << node.character << "\' appeared " << node.count << " times");
+        return ( out << "Frequency =  " << node.count << ", character = \'" << node.character << "\'");
     }
 };
 

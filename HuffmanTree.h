@@ -19,6 +19,7 @@ private:
     int huffmanCodeBuffer;
     ifstream inputFile;
     ofstream outputFile;
+    void huffmanTreePreorder( PQueueNode<HuffmanTreeNode> * p );
 public:
 //    HuffmanTree( string inputFileName );
     void becomeHuffmanTree();
@@ -27,6 +28,7 @@ public:
     void closeFiles();
     void doCompressedOutput( string outputFileName );
     void decompressFile( string inputFileName, string outputFileName );
+    void huffmanTreePreorder();
 };
 
 //HuffmanTree::HuffmanTree( string inputFileName )
@@ -62,6 +64,18 @@ void doCompressedOutput( string outputFileName )
 void decompressFile( string inputFileName, string outputFileName )
 {
     
+}
+
+void HuffmanTree::huffmanTreePreorder(){
+    huffmanTreePreorder( root );
+}
+
+void HuffmanTree::huffmanTreePreorder( PQueueNode<HuffmanTreeNode> * p ) {
+    if ( p != 0 ) {
+        cout << p->info << endl;
+        huffmanTreePreorder( p->info.leftHuffmanTree );
+        huffmanTreePreorder( p->info.rightHuffmanTree );
+    }
 }
 
 #endif	/* HUFFMANTREE_H */
