@@ -42,7 +42,7 @@ void PriorityQueue<QueueType>::percolateUp( PQueueNode<QueueType> * ptr )
     
     while ( !queueValidated && ptr->fatherNode != 0 )
     {
-        if ( ptr->info > ptr->fatherNode->info )
+        if ( ptr->info < ptr->fatherNode->info )
         {
             swap( ptr, ptr->fatherNode );
             ptr = ptr->fatherNode;
@@ -59,15 +59,15 @@ void PriorityQueue<QueueType>::percolateDown()
     bool queueValidated = false;
     if (root != 0) {
         while (((p->leftSubTree != 0) || (p->rightSubTree != 0)) && (!queueValidated)) {
-            if ((p->rightSubTree != 0) && (p->rightSubTree->info > p->leftSubTree->info)) {
-                if (p->rightSubTree->info > p->info) {
+            if ((p->rightSubTree != 0) && (p->rightSubTree->info < p->leftSubTree->info)) {
+                if (p->rightSubTree->info < p->info) {
                     swap(p, p->rightSubTree);
                     p = p->rightSubTree;
                 } else {
                     queueValidated = true;
                 }
             } else {
-                if (p->leftSubTree->info > p->info) {
+                if (p->leftSubTree->info < p->info) {
                     swap(p, p->leftSubTree);
                     p = p->leftSubTree;
                 } else {
@@ -193,7 +193,7 @@ QueueType PriorityQueue<QueueType>::dequeue()
     else
     {
         cout << "Cannot dequeue because queue is empty." << endl;
-        return QueueType();
+        return 0;
     }
 }
 

@@ -10,7 +10,6 @@
 
 #include <string>
 #include <fstream>
-#include "PriorityQueue.h"
 #include "HuffmanTreeNode.h"
 #include "HuffmanTree.h"
 
@@ -19,7 +18,6 @@ using namespace std;
 class CompressionManager {
 private:
     int characterCount[256];
-    //PriorityQueue characterQueue;
     HuffmanTree huffmanTree;
     string inputFileName;
     string outputFileName;
