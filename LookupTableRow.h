@@ -16,20 +16,19 @@ public:
     char character;
     int code;
     int usedBits;
-    
-    LookupTableRow( char ch='\0', int c=0, int b=0 ){
+
+    LookupTableRow(char ch = '\0', int c = 0, int b = 0) {
         character = ch;
         code = c;
         usedBits = b;
     }
-    
-    void insertBit( int bit ) {
+
+    void insertBit(int bit) {
         code << 1;
         code = code | bit;
     }
-    
-    friend ostream &operator<<( ostream &out, LookupTableRow row )
-    {
+
+    friend ostream &operator<<(ostream &out, LookupTableRow row) {
         return ( out << "Code of \'" << row.character << "\' is " << row.code << " with "
                 << row.usedBits << " bits used.");
     }

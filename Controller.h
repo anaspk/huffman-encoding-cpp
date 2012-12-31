@@ -13,32 +13,27 @@
 #include "HuffmanTree.h"
 using namespace std;
 
-class Controller
-{
+class Controller {
 private:
     HuffmanTree * huffmanTree;
 public:
-    void compressFile( string inputFileName, string outputFileName );
-    void decompressFile( string inputFileName, string outputFileName );
+    void compressFile(string inputFileName, string outputFileName);
+    void decompressFile(string inputFileName, string outputFileName);
     ~Controller();
 };
 
-Controller::compressFile( string inputFileName, string outputFileName )
-{
-    huffmanTree = new HuffmanTree( inputFileName );
-    huffmanTree->doCompressedOutput( string outputFileName );
-    huffmanTree->closeFiles();
+Controller::compressFile(string inputFileName, string outputFileName) {
+    huffmanTree = new HuffmanTree(inputFileName);
+    huffmanTree->doCompressedOutput(string outputFileName);
+    //huffmanTree->closeFiles();
 }
 
-Controller::decompressFile( string inputFileName, string outputFileName )
-{
-    this->huffmanTree->decompressFile( inputFileName, outputFileName );
+Controller::decompressFile(string inputFileName, string outputFileName) {
+    this->huffmanTree->decompressFile(inputFileName, outputFileName);
 }
 
-Controller::~Controller()
-{
-    if ( huffmanTree != 0 )
-    {
+Controller::~Controller() {
+    if (huffmanTree != 0) {
         delete huffmanTree;
         huffmanTree;
     }

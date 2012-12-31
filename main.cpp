@@ -16,40 +16,42 @@ int main(int argc, char** argv) {
     string inputFileName, outputFileName;
     CompressionManager * compressionManager;
     DecompressionManager * decompressionManager;
-    
+
     do {
         cout << "What do you want to do? Enter:" << endl;
         cout << "1 - to compress a file" << endl;
         cout << "2 - to decompress a file" << endl;
         cout << "Any other number to exit the program" << endl;
         cin >> choice;
-        
-        switch ( choice ) {
-            case 1: {
+
+        switch (choice) {
+            case 1:
+            {
                 cout << "Please enter name of input file:" << endl;
                 cin >> inputFileName;
                 cout << "Please enter name of output file:" << endl;
                 cin >> outputFileName;
-                compressionManager = new CompressionManager( inputFileName, outputFileName );
-//                compressionManager->tempUtilFunc();
+                compressionManager = new CompressionManager(inputFileName, outputFileName);
+                //                compressionManager->tempUtilFunc();
                 delete compressionManager;
             }
                 break;
-            case 2: {
+            case 2:
+            {
                 cout << "Please enter name of input file:" << endl;
                 cin >> inputFileName;
                 cout << "Please enter name of output file:" << endl;
                 cin >> outputFileName;
-                decompressionManager = new DecompressionManager( inputFileName, outputFileName );
+                decompressionManager = new DecompressionManager(inputFileName, outputFileName);
                 delete decompressionManager;
             }
                 break;
             default:
                 break;
         }
-        
-    } while ( choice == 1 || choice == 2 );
-    
+
+    } while (choice == 1 || choice == 2);
+
     return 0;
 }
 

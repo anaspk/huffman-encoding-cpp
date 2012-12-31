@@ -12,149 +12,126 @@ using namespace std;
 #include "SingleLinkedListNode.h"
 
 template <class listType>
-class SingleLinkedList
-{
-    protected:
-        SingleLinkedListNode<listType> * head;
-        SingleLinkedListNode<listType> * tail;
-        
-        SingleLinkedListNode<listType> * find( listType );
-    public:
-        SingleLinkedList();
-        ~SingleLinkedList();
+class SingleLinkedList {
+protected:
+    SingleLinkedListNode<listType> * head;
+    SingleLinkedListNode<listType> * tail;
 
-        bool isEmpty();
-        
-        void addToHead( listType );
-        void addToTail( listType );
-        listType deleteFromHead();
-        listType deleteFromTail();
-        void del( listType );
-        void print();
-        
-        bool pubFind( listType );
+    SingleLinkedListNode<listType> * find(listType);
+public:
+    SingleLinkedList();
+    ~SingleLinkedList();
+
+    bool isEmpty();
+
+    void addToHead(listType);
+    void addToTail(listType);
+    listType deleteFromHead();
+    listType deleteFromTail();
+    void del(listType);
+    void print();
+
+    bool pubFind(listType);
 };
 
 template <class listType>
-SingleLinkedList<listType>::SingleLinkedList()
-{
+SingleLinkedList<listType>::SingleLinkedList() {
     head = tail = 0;
 }
 
 template <class listType>
-SingleLinkedList<listType>::~SingleLinkedList()
-{
-    while ( !isEmpty() )
+SingleLinkedList<listType>::~SingleLinkedList() {
+    while (!isEmpty())
         deleteFromHead();
 }
 
 template <class listType>
-bool SingleLinkedList<listType>::isEmpty()
-{
+bool SingleLinkedList<listType>::isEmpty() {
     return ( head == 0);
 }
 
 template <class listType>
-void SingleLinkedList<listType>::addToHead( listType x )
-{
-    SingleLinkedListNode<listType> * temp = new SingleLinkedListNode<listType>( x );
-    
-    if ( isEmpty() )
+void SingleLinkedList<listType>::addToHead(listType x) {
+    SingleLinkedListNode<listType> * temp = new SingleLinkedListNode<listType > (x);
+
+    if (isEmpty())
         tail = head = temp;
-    else
-    {
+    else {
         temp->next = head;
         head = temp;
-    }    
+    }
 }
 
 template <class listType>
-void SingleLinkedList<listType>::addToTail( listType x )
-{
-    SingleLinkedListNode<listType> * temp = new SingleLinkedListNode<listType>( x );
-    
-    if ( isEmpty() )
+void SingleLinkedList<listType>::addToTail(listType x) {
+    SingleLinkedListNode<listType> * temp = new SingleLinkedListNode<listType > (x);
+
+    if (isEmpty())
         head = tail = temp;
-    else
-    {
+    else {
         tail->next = temp;
         tail = tail->next;
     }
 }
 
 template <class listType>
-listType SingleLinkedList<listType>::deleteFromHead()
-{
-    if ( !isEmpty() )
-    {
+listType SingleLinkedList<listType>::deleteFromHead() {
+    if (!isEmpty()) {
         listType temp1 = head->info;
-        
-        if ( head == tail )
-        {
+
+        if (head == tail) {
             delete head;
             head = tail = 0;
-        }
-        else
-        {
+        } else {
             SingleLinkedListNode<listType> * temp2 = head->next;
             delete head;
             head = temp2;
         }
-        
+
         return temp1;
     }
 }
 
 template <class listType>
-listType SingleLinkedList<listType>::deleteFromTail()
-{
-    if ( !isEmpty() )
-    {
+listType SingleLinkedList<listType>::deleteFromTail() {
+    if (!isEmpty()) {
         listType temp1 = tail->info;
-        
-        if ( head == tail )
-        {
+
+        if (head == tail) {
             delete tail;
             head = tail = 0;
-        }
-        else
-        {
+        } else {
             SingleLinkedListNode<listType> * temp2 = head;
-            
-            while ( temp2->next != tail )
+
+            while (temp2->next != tail)
                 temp2 = temp2->next;
-            
-            delete tail;            
+
+            delete tail;
             tail = temp2;
             tail->next = 0;
         }
-        
+
         return temp1;
     }
 }
 
 template <class listType>
-void SingleLinkedList<listType>::del( listType x )
-{
-    if ( !isEmpty() )
-    {
-        if ( head->info == x )
+void SingleLinkedList<listType>::del(listType x) {
+    if (!isEmpty()) {
+        if (head->info == x)
             deleteFromHead();
-        else if ( tail->info == x )
+        else if (tail->info == x)
             deleteFromTail();
-        else
-        {
+        else {
             SingleLinkedListNode<listType> * temp = head;
             SingleLinkedListNode<listType> * previous = temp;
 
-            while ( temp->info != x && temp->next != 0 )
-            {
+            while (temp->info != x && temp->next != 0) {
                 previous = temp;
                 temp = temp->next;
             }
 
-            if ( temp->info == x )
-            {
+            if (temp->info == x) {
                 previous->next = temp->next;
                 delete temp;
             }
@@ -163,16 +140,13 @@ void SingleLinkedList<listType>::del( listType x )
 }
 
 template <class listType>
-void SingleLinkedList<listType>::print()
-{
-    if ( !isEmpty() )
-    {
+void SingleLinkedList<listType>::print() {
+    if (!isEmpty()) {
         SingleLinkedListNode<listType> * temp = head;
 
         cout << temp->info << endl;
 
-        while ( temp->next != 0 )
-        {
+        while (temp->next != 0) {
             temp = temp->next;
             cout << temp->info << endl;
         }
@@ -180,43 +154,35 @@ void SingleLinkedList<listType>::print()
 }
 
 template <class listType>
-SingleLinkedListNode<listType> * SingleLinkedList<listType>::find( listType x )
-{
-    if ( !isEmpty() )
-    {
-        if ( head == tail )
-        {
-            if ( head->info == x )
+SingleLinkedListNode<listType> * SingleLinkedList<listType>::find(listType x) {
+    if (!isEmpty()) {
+        if (head == tail) {
+            if (head->info == x)
                 return head;
             else
                 return 0;
-        }
-        else
-        {
+        } else {
             SingleLinkedListNode<listType> * temp = head;
 
-            while ( temp->next != 0 )
-            {
-                if ( temp->info == x )
+            while (temp->next != 0) {
+                if (temp->info == x)
                     return temp;
 
                 temp = temp->next;
             }
-            
-            if ( temp->info == x )
+
+            if (temp->info == x)
                 return temp;
             else
                 return 0;
         }
-    }
-    else
+    } else
         return 0;
 }
 
 template <class listType>
-bool SingleLinkedList<listType>::pubFind( listType x )
-{
-    if ( find( x ) == 0 )
+bool SingleLinkedList<listType>::pubFind(listType x) {
+    if (find(x) == 0)
         return false;
     else
         return true;

@@ -12,26 +12,24 @@
 #include "SingleLinkedList.h"
 
 class LookupTable : public SingleLinkedList<LookupTableRow> {
-    public:
-        LookupTableRow getCodeRow( char character );
+public:
+    LookupTableRow getCodeRow(char character);
 };
 
 LookupTableRow LookupTable::getCodeRow(char character) {
-    if ( !isEmpty() )
-    {
+    if (!isEmpty()) {
         SingleLinkedListNode<LookupTableRow> * temp = head;
 
-        while ( temp->next != 0 )
-        {
-            if ( temp->info.character == character ) {
-//                cout << "matched " << temp->info.character << " to " << character << endl;
+        while (temp->next != 0) {
+            if (temp->info.character == character) {
+                //                cout << "matched " << temp->info.character << " to " << character << endl;
                 return temp->info;
             }
-                
+
             temp = temp->next;
         }
-        if ( temp->info.character == character ) {
-//            cout << "matched " << temp->info.character << " to " << character << endl;
+        if (temp->info.character == character) {
+            //            cout << "matched " << temp->info.character << " to " << character << endl;
             return temp->info;
         }
     }

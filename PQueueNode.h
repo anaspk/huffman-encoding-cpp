@@ -12,16 +12,14 @@
 using namespace std;
 
 template <class NodeType>
-class PQueueNode
-{
+class PQueueNode {
 public:
     NodeType info;
     PQueueNode * leftSubTree;
     PQueueNode * rightSubTree;
     PQueueNode * fatherNode;
 
-    PQueueNode( NodeType x, PQueueNode * l = 0, PQueueNode * r = 0, PQueueNode * f = 0 )
-    {
+    PQueueNode(NodeType x, PQueueNode * l = 0, PQueueNode * r = 0, PQueueNode * f = 0) {
         info = x;
         leftSubTree = l;
         rightSubTree = r;

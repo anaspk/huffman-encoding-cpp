@@ -9,16 +9,15 @@
 #define	NODE_H
 
 template <class listType>
-class SingleLinkedListNode
-{
-    public:
-        listType info;
-        SingleLinkedListNode<listType> * next;
-        SingleLinkedListNode( listType x, SingleLinkedListNode<listType> * n = 0)
-        {
-            info = x;
-            next = n;
-        }
+class SingleLinkedListNode {
+public:
+    listType info;
+    SingleLinkedListNode<listType> * next;
+
+    SingleLinkedListNode(listType x, SingleLinkedListNode<listType> * n = 0) {
+        info = x;
+        next = n;
+    }
 };
 
 #endif	/* NODE_H */

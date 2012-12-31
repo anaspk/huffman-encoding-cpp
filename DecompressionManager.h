@@ -13,11 +13,11 @@ using namespace std;
 
 class DecompressionManager {
 public:
-    DecompressionManager( string ifile, string ofile );
+    DecompressionManager(string ifile, string ofile);
 };
 
-DecompressionManager::DecompressionManager( string ifile, string ofile ) {
-    
+DecompressionManager::DecompressionManager(string ifile, string ofile) {
+
 }
 #endif	/* DECOMPRESSIONMANAGER_H */
 

@@ -9,17 +9,15 @@
 #define	DynQueueNode_H
 
 template <class queueType>
-class DynQueueNode
-{
-    public:
-        queueType info;
-        DynQueueNode<queueType> * next;
-        
-        DynQueueNode( queueType temp, DynQueueNode<queueType> * nextAddress = 0 )
-        {
-            info = temp;
-            next = nextAddress;
-        }
+class DynQueueNode {
+public:
+    queueType info;
+    DynQueueNode<queueType> * next;
+
+    DynQueueNode(queueType temp, DynQueueNode<queueType> * nextAddress = 0) {
+        info = temp;
+        next = nextAddress;
+    }
 };
 
 #endif	/* DynQueueNode_H */

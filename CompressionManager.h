@@ -24,33 +24,33 @@ private:
     ifstream inputFile;
     ofstream outputFile;
 public:
-    CompressionManager( string ifile, string ofile );
+    CompressionManager(string ifile, string ofile);
     void readAndCountCharacters();
     void enqueueCharacters();
-    
+
     //void tempUtilFunc();
 };
 
-CompressionManager::CompressionManager( string ifile, string ofile ) {
+CompressionManager::CompressionManager(string ifile, string ofile) {
     inputFileName = ifile;
     outputFileName = ofile;
-    
-    for ( int i=0; i<256; i++ ) {
+
+    for (int i = 0; i < 256; i++) {
         characterCount[i] = 0;
     }
-    
+
     readAndCountCharacters();
     enqueueCharacters();
     huffmanTree.becomeHuffmanTree();
     huffmanTree.outputCodes();
     huffmanTree.createLookupTable();
-    huffmanTree.doCompressedOutput( ifile, ofile );
+    huffmanTree.doCompressedOutput(ifile, ofile);
 }
 
 void CompressionManager::readAndCountCharacters() {
-    inputFile.open( inputFileName.c_str() );
+    inputFile.open(inputFileName.c_str());
     char character = inputFile.get();
-    while ( character != EOF ) {
+    while (character != EOF) {
         characterCount[character]++;
         character = inputFile.get();
     }
@@ -59,10 +59,10 @@ void CompressionManager::readAndCountCharacters() {
 
 void CompressionManager::enqueueCharacters() {
     HuffmanTreeNode * huffmanTreeNode;
-    for ( int i=0; i<256; i++ ) {
-        if ( characterCount[i] != 0 ) {
-            huffmanTreeNode = new HuffmanTreeNode( characterCount[i], static_cast<char>(i) );
-            huffmanTree.enqueue( *huffmanTreeNode );
+    for (int i = 0; i < 256; i++) {
+        if (characterCount[i] != 0) {
+            huffmanTreeNode = new HuffmanTreeNode(characterCount[i], static_cast<char> (i));
+            huffmanTree.enqueue(*huffmanTreeNode);
         }
     }
 }

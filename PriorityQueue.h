@@ -16,50 +16,44 @@
 using namespace std;
 
 template <class QueueType>
-class PriorityQueue
-{
+class PriorityQueue {
 private:
     PQueueNode<QueueType> * lastInserted;
-    
-    void percolateUp( PQueueNode<QueueType> * );
+
+    void percolateUp(PQueueNode<QueueType> *);
     void percolateDown();
     void adjustLastInserted();
-    void swap( PQueueNode<QueueType> *, PQueueNode<QueueType> * );
-    void preOrder( PQueueNode<QueueType> * );
+    void swap(PQueueNode<QueueType> *, PQueueNode<QueueType> *);
+    void preOrder(PQueueNode<QueueType> *);
 protected:
     PQueueNode<QueueType> * root;
 public:
     PriorityQueue();
-    
-    void enqueue( QueueType );
-    void enqueue( QueueType * );
+
+    void enqueue(QueueType);
+    void enqueue(QueueType *);
     QueueType dequeue();
-//    QueueType * dequeue();
+    //    QueueType * dequeue();
     void preOrder();
     bool isEmpty();
     bool isLastElement();
 };
 
 template <class QueueType>
-void PriorityQueue<QueueType>::percolateUp( PQueueNode<QueueType> * ptr )
-{
+void PriorityQueue<QueueType>::percolateUp(PQueueNode<QueueType> * ptr) {
     bool queueValidated = false;
-    
-    while ( !queueValidated && ptr->fatherNode != 0 )
-    {
-        if ( ptr->info < ptr->fatherNode->info )
-        {
-            swap( ptr, ptr->fatherNode );
+
+    while (!queueValidated && ptr->fatherNode != 0) {
+        if (ptr->info < ptr->fatherNode->info) {
+            swap(ptr, ptr->fatherNode);
             ptr = ptr->fatherNode;
-        }
-        else
+        } else
             queueValidated = true;
     }
 }
 
 template <class QueueType>
-void PriorityQueue<QueueType>::percolateDown()
-{   
+void PriorityQueue<QueueType>::percolateDown() {
     PQueueNode<QueueType> *p = root;
     bool queueValidated = false;
     if (root != 0) {
@@ -84,124 +78,103 @@ void PriorityQueue<QueueType>::percolateDown()
 }
 
 template <class QueueType>
-void PriorityQueue<QueueType>::adjustLastInserted()
-{
+void PriorityQueue<QueueType>::adjustLastInserted() {
     DynamicQueue<PQueueNode<QueueType>*> queue;
     PQueueNode<QueueType> * temp;
-    
-    queue.enqueue( root );
-    
-    while ( !queue.isEmpty() )
-    {
+
+    queue.enqueue(root);
+
+    while (!queue.isEmpty()) {
         temp = queue.dequeue();
-        
-        if ( temp->leftSubTree != 0 )
-            queue.enqueue( temp->leftSubTree );
-        if ( temp->rightSubTree != 0 )
-            queue.enqueue( temp->rightSubTree );
+
+        if (temp->leftSubTree != 0)
+            queue.enqueue(temp->leftSubTree);
+        if (temp->rightSubTree != 0)
+            queue.enqueue(temp->rightSubTree);
     }
-    
+
     lastInserted = temp;
 }
 
 template <class QueueType>
-void PriorityQueue<QueueType>::swap( PQueueNode<QueueType> * p, PQueueNode<QueueType> * q )
-{
+void PriorityQueue<QueueType>::swap(PQueueNode<QueueType> * p, PQueueNode<QueueType> * q) {
     QueueType temp = p->info;
     p->info = q->info;
     q->info = temp;
 }
 
 template <class QueueType>
-PriorityQueue<QueueType>::PriorityQueue()
-{
+PriorityQueue<QueueType>::PriorityQueue() {
     root = lastInserted = 0;
 }
 
 template <class QueueType>
-void PriorityQueue<QueueType>::enqueue( QueueType x )
-{
-    PQueueNode<QueueType> * ptr = new PQueueNode<QueueType>( x );
-    
-    if ( root == 0 )
+void PriorityQueue<QueueType>::enqueue(QueueType x) {
+    PQueueNode<QueueType> * ptr = new PQueueNode<QueueType > (x);
+
+    if (root == 0)
         root = ptr;
-    else
-    {
+    else {
         DynamicQueue<PQueueNode<QueueType>*> queue;
         bool nodeInserted = false;
-        queue.enqueue( root );
+        queue.enqueue(root);
         PQueueNode<QueueType> * temp;
-        
-        while( !nodeInserted )
-        {
+
+        while (!nodeInserted) {
             temp = queue.dequeue();
-            
-            if ( temp->leftSubTree == 0 )
-            {
+
+            if (temp->leftSubTree == 0) {
                 temp->leftSubTree = ptr;
                 ptr->fatherNode = temp;
                 nodeInserted = true;
-            }
-            else if ( temp->rightSubTree == 0 )
-            {
+            } else if (temp->rightSubTree == 0) {
                 temp->rightSubTree = ptr;
                 ptr->fatherNode = temp;
                 nodeInserted = true;
-            }
-            else
-            {
-                queue.enqueue( temp->leftSubTree );
-                queue.enqueue( temp->rightSubTree );
+            } else {
+                queue.enqueue(temp->leftSubTree);
+                queue.enqueue(temp->rightSubTree);
             }
         }
-        
+
         lastInserted = ptr;
-        percolateUp( ptr );
+        percolateUp(ptr);
     }
 }
 
 template <class QueueType>
-void PriorityQueue<QueueType>::enqueue( QueueType * x ) {
-    enqueue( *x );
+void PriorityQueue<QueueType>::enqueue(QueueType * x) {
+    enqueue(*x);
 }
 
 template <class QueueType>
-QueueType PriorityQueue<QueueType>::dequeue()
-{
-    if ( root != 0 )
-    {
+QueueType PriorityQueue<QueueType>::dequeue() {
+    if (root != 0) {
         PQueueNode<QueueType> * toDelete;
-        
+
         QueueType value = root->info;
-        
-        if ( lastInserted != root ) // in that case, lastInserted->fatherNode will be 0 and will cause the program to crash
+
+        if (lastInserted != root) // in that case, lastInserted->fatherNode will be 0 and will cause the program to crash
         {
             root->info = lastInserted->info;
             toDelete = lastInserted;
 
-            if ( lastInserted->fatherNode->rightSubTree == lastInserted )
-            {
+            if (lastInserted->fatherNode->rightSubTree == lastInserted) {
                 lastInserted->fatherNode->rightSubTree = 0;
                 lastInserted = lastInserted->fatherNode->leftSubTree;
-            }
-            else
-            {
+            } else {
                 lastInserted->fatherNode->leftSubTree = 0;
                 adjustLastInserted();
             }
             delete toDelete;
             percolateDown();
-        }
-        else
-        {
+        } else {
             delete root;
             root = 0;
         }
-        
+
         return value;
-    }
-    else
-    {
+    } else {
         cout << "Cannot dequeue because queue is empty." << endl;
         return 0;
     }
@@ -214,19 +187,16 @@ QueueType PriorityQueue<QueueType>::dequeue()
 //}
 
 template <class QueueType>
-void PriorityQueue<QueueType>::preOrder()
-{
-    preOrder( root );
+void PriorityQueue<QueueType>::preOrder() {
+    preOrder(root);
 }
 
 template <class QueueType>
-void PriorityQueue<QueueType>::preOrder( PQueueNode<QueueType> * ptr )
-{
-    if ( ptr != 0 )
-    {
+void PriorityQueue<QueueType>::preOrder(PQueueNode<QueueType> * ptr) {
+    if (ptr != 0) {
         cout << ptr->info << endl;
-        preOrder( ptr->leftSubTree );
-        preOrder( ptr->rightSubTree );
+        preOrder(ptr->leftSubTree);
+        preOrder(ptr->rightSubTree);
     }
 }
 
@@ -237,7 +207,7 @@ bool PriorityQueue<QueueType>::isEmpty() {
 
 template <class QueueType>
 bool PriorityQueue<QueueType>::isLastElement() {
-    return ( root->leftSubTree == 0 && root->rightSubTree == 0 );
+    return ( root->leftSubTree == 0 && root->rightSubTree == 0);
 }
 #endif	/* PRIORITYQUEUE_H */
 
