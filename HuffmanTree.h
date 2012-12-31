@@ -12,6 +12,9 @@
 #include <fstream>
 #include "PriorityQueue.h"
 #include "HuffmanTreeNode.h"
+#include "CompressionManager.h"
+
+using namespace std;
 
 class HuffmanTree : public PriorityQueue<HuffmanTreeNode>
 {
@@ -20,6 +23,7 @@ private:
     ifstream inputFile;
     ofstream outputFile;
     void huffmanTreePreorder( PQueueNode<HuffmanTreeNode> * p );
+    void outputCodes( PQueueNode<HuffmanTreeNode> * p, string code );
 public:
 //    HuffmanTree( string inputFileName );
     void becomeHuffmanTree();
@@ -29,6 +33,7 @@ public:
     void doCompressedOutput( string outputFileName );
     void decompressFile( string inputFileName, string outputFileName );
     void huffmanTreePreorder();
+    void outputCodes();
 };
 
 //HuffmanTree::HuffmanTree( string inputFileName )
@@ -78,5 +83,23 @@ void HuffmanTree::huffmanTreePreorder( PQueueNode<HuffmanTreeNode> * p ) {
     }
 }
 
+void HuffmanTree::outputCodes()
+{
+    //cout << "public called" << endl;
+    outputCodes( root, "" );
+}
+
+void HuffmanTree::outputCodes( PQueueNode<HuffmanTreeNode> * p, string code ) {
+    //cout << "private called" << endl;
+    if ( p->info.leftHuffmanTree != 0 ){
+        outputCodes( p->info.leftHuffmanTree, code + "0" );
+    }
+    if ( p->info.rightHuffmanTree != 0  ) {
+        outputCodes( p->info.rightHuffmanTree, code + "1" );
+    }
+    if ( p->info.leftHuffmanTree == 0 && p->info.rightHuffmanTree == 0 ) {
+        cout << "Code of " << p->info.character << " is " << code << endl;
+    }
+}
 #endif	/* HUFFMANTREE_H */
 

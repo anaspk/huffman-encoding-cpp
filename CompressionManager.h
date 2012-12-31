@@ -29,7 +29,7 @@ public:
     void enqueueCharacters();
     void becomeHuffmanTree();
     
-    void tempUtilFunc();
+    //void tempUtilFunc();
 };
 
 CompressionManager::CompressionManager( string ifile, string ofile ) {
@@ -43,6 +43,7 @@ CompressionManager::CompressionManager( string ifile, string ofile ) {
     readAndCountCharacters();
     enqueueCharacters();
     becomeHuffmanTree();
+    huffmanTree.outputCodes();
 }
 
 void CompressionManager::readAndCountCharacters() {
@@ -71,7 +72,7 @@ void CompressionManager::becomeHuffmanTree() {
     HuffmanTreeNode * tempnode3;
     
     while ( !huffmanTree.isEmpty() && !huffmanTree.isLastElement() ) {
-        cout << "entered" << endl;
+        //cout << "entered" << endl;
         node1 = huffmanTree.dequeue();
         node2 = huffmanTree.dequeue();
         pqnode1 = new PQueueNode<HuffmanTreeNode>( node1 );
@@ -88,15 +89,15 @@ void CompressionManager::becomeHuffmanTree() {
         huffmanTree.enqueue( tempnode3 );
     }
 }
-void CompressionManager::tempUtilFunc() {
-//    HuffmanTreeNode emptyNode;
-//    HuffmanTreeNode huffmanTreeNode = huffmanTree.dequeue();
-//    while ( huffmanTreeNode != emptyNode ) {
-//        cout << huffmanTreeNode << endl;
-//        huffmanTreeNode = huffmanTree.dequeue();
-//    }
-    huffmanTree.huffmanTreePreorder();
-    
-}
+//void CompressionManager::tempUtilFunc() {
+////    HuffmanTreeNode emptyNode;
+////    HuffmanTreeNode huffmanTreeNode = huffmanTree.dequeue();
+////    while ( huffmanTreeNode != emptyNode ) {
+////        cout << huffmanTreeNode << endl;
+////        huffmanTreeNode = huffmanTree.dequeue();
+////    }
+//    huffmanTree.huffmanTreePreorder();
+//    
+//}
 #endif	/* COMPRESSIONMANAGER_H */
 
