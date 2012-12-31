@@ -12,7 +12,7 @@
 #include <fstream>
 #include "PriorityQueue.h"
 #include "HuffmanTreeNode.h"
-#include "CompressionManager.h"
+#include "LookupTable.h"
 
 using namespace std;
 
@@ -22,12 +22,15 @@ private:
     int huffmanCodeBuffer;
     ifstream inputFile;
     ofstream outputFile;
+    LookupTable lookupTable;
     void huffmanTreePreorder( PQueueNode<HuffmanTreeNode> * p );
+    void createLookupTable( PQueueNode<HuffmanTreeNode> * p, int code, int usedBits );
     void outputCodes( PQueueNode<HuffmanTreeNode> * p, string code );
+protected:
+    int insertBit( int number, int bit );
 public:
-//    HuffmanTree( string inputFileName );
     void becomeHuffmanTree();
-    void createLookupTabel();
+    void createLookupTable();
     int lookupHuffmanCode( char character );
     void closeFiles();
     void doCompressedOutput( string outputFileName );
@@ -35,11 +38,6 @@ public:
     void huffmanTreePreorder();
     void outputCodes();
 };
-
-//HuffmanTree::HuffmanTree( string inputFileName )
-//{
-//    inputFile.open( inputFileName.c_str() );
-//}
 
 void HuffmanTree::becomeHuffmanTree()
 {
@@ -66,9 +64,22 @@ void HuffmanTree::becomeHuffmanTree()
     }
 }
 
-void HuffmanTree::createLookupTabel()
+void HuffmanTree::createLookupTable()
 {
-    
+    createLookupTable( root, 0, 0 );
+    lookupTable.print();
+}
+
+void HuffmanTree::createLookupTable( PQueueNode<HuffmanTreeNode> * p, int code, int usedBits ) {
+    if ( p->info.leftHuffmanTree != 0 ){
+        createLookupTable( p->info.leftHuffmanTree, insertBit( code, 0 ), usedBits + 1 );
+    }
+    if ( p->info.rightHuffmanTree != 0  ) {
+        createLookupTable( p->info.rightHuffmanTree, insertBit( code, 1 ), usedBits + 1 );
+    }
+    if ( p->info.leftHuffmanTree == 0 && p->info.rightHuffmanTree == 0 ) {
+        lookupTable.addToTail( *(new LookupTableRow( p->info.character, code, usedBits )) );
+    }
 }
 
 int HuffmanTree::lookupHuffmanCode( char character )
@@ -118,6 +129,12 @@ void HuffmanTree::outputCodes( PQueueNode<HuffmanTreeNode> * p, string code ) {
     if ( p->info.leftHuffmanTree == 0 && p->info.rightHuffmanTree == 0 ) {
         cout << "Code of " << p->info.character << " is " << code << endl;
     }
+}
+
+int HuffmanTree::insertBit( int number, int bit ) {
+    number = number << 1;
+    number = number | bit;
+    return number;
 }
 #endif	/* HUFFMANTREE_H */
 

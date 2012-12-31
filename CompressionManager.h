@@ -12,7 +12,6 @@
 #include <fstream>
 #include "HuffmanTreeNode.h"
 #include "HuffmanTree.h"
-#include "LookupTable.h"
 
 using namespace std;
 
@@ -20,7 +19,6 @@ class CompressionManager {
 private:
     int characterCount[256];
     HuffmanTree huffmanTree;
-    LookupTable lookupTable;
     string inputFileName;
     string outputFileName;
     ifstream inputFile;
@@ -45,6 +43,7 @@ CompressionManager::CompressionManager( string ifile, string ofile ) {
     enqueueCharacters();
     huffmanTree.becomeHuffmanTree();
     huffmanTree.outputCodes();
+    huffmanTree.createLookupTable();
 }
 
 void CompressionManager::readAndCountCharacters() {
