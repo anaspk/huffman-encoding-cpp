@@ -81,7 +81,7 @@ void HuffmanTree::becomeHuffmanTree() {
 
 void HuffmanTree::createLookupTable() {
     createLookupTable(root, 0, 0);
-    lookupTable.print();
+    //lookupTable.print();
 }
 
 void HuffmanTree::createLookupTable(PQueueNode<HuffmanTreeNode> * p, int code, int usedBits) {
