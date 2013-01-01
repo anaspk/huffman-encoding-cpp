@@ -27,6 +27,7 @@
                    projectFiles="true">
       <itemPath>main.cpp</itemPath>
       <itemPath>temp.txt</itemPath>
+      <itemPath>temp1.txt</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"

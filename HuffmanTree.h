@@ -23,6 +23,7 @@ private:
     int hcbUsedBits;
     int machineBits;
     int biggestInteger;
+    PQueueNode<HuffmanTreeNode> * decodingPointer;
     ifstream inputFile;
     ofstream outputFile;
     LookupTable lookupTable;
@@ -39,6 +40,7 @@ public:
     void doCompressedOutput(string inputFileName, string outputFileName);
     void writeCodeToFile(LookupTableRow codeRow);
     void finishOutput();
+    char moveDecodingPointer( int bit );
     void decompressFile(string inputFileName, string outputFileName);
     void huffmanTreePreorder();
     void outputCodes();
@@ -73,6 +75,8 @@ void HuffmanTree::becomeHuffmanTree() {
 
         enqueue(tempnode3);
     }
+    
+    decodingPointer = root;
 }
 
 void HuffmanTree::createLookupTable() {
@@ -131,7 +135,7 @@ void HuffmanTree::writeCodeToFile(LookupTableRow codeRow) {
             code = code << 1;
         }
 
-        outputFile << huffmanCodeBuffer;
+        outputFile << huffmanCodeBuffer << " ";
 
         //        cout << "bits in huffman code buffer from left to right are:" << endl;
         for (int i = 0; i < machineBits; i++) {
@@ -154,13 +158,28 @@ void HuffmanTree::writeCodeToFile(LookupTableRow codeRow) {
 void HuffmanTree::finishOutput() {
     //    cout << "Last remaining bits of encoding are:" << endl;
     huffmanCodeBuffer = huffmanCodeBuffer << (machineBits - hcbUsedBits);
-    outputFile << huffmanCodeBuffer;
+    outputFile << huffmanCodeBuffer << " ";
     for (int i = 0; i < hcbUsedBits; i++) {
         //        cout << getLeftMostBit( huffmanCodeBuffer ) << endl;
         huffmanCodeBuffer = huffmanCodeBuffer << 1;
     }
 }
 
+char HuffmanTree::moveDecodingPointer( int bit ) {
+    if ( bit == 0 ) {
+        decodingPointer = decodingPointer->info.leftHuffmanTree;
+    } else {
+        decodingPointer = decodingPointer->info.rightHuffmanTree;
+    }
+    
+    char c = decodingPointer->info.character;
+    
+    if ( c != '\0' ) {
+        decodingPointer = root; // reset the pointer for next character
+    }
+    
+    return c;
+}
 void decompressFile(string inputFileName, string outputFileName) {
 
 }

@@ -27,7 +27,7 @@ public:
     CompressionManager(string ifile, string ofile);
     void readAndCountCharacters();
     void enqueueCharacters();
-
+    HuffmanTree * getHuffmanTree();
     //void tempUtilFunc();
 };
 
@@ -65,6 +65,10 @@ void CompressionManager::enqueueCharacters() {
             huffmanTree.enqueue(*huffmanTreeNode);
         }
     }
+}
+
+HuffmanTree * CompressionManager::getHuffmanTree() {
+    return &huffmanTree;
 }
 
 //void CompressionManager::tempUtilFunc() {
